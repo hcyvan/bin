@@ -5,7 +5,8 @@ fileList=os.listdir(os.getcwd())
 # change the scripts to excutable state, and create to soft link to them
 if (len(sys.argv)==1):
 	for file in fileList:
-		if(file[-3:]==".py" and file!="configure.py"):
+		if((file[-3:]==".py"or file[-3:]==".sh") and file!="configure.py"):
+			print file
 			os.system("chmod 755 "+file)
 			os.system("ln -s "+file+" "+file[:-3])
 
