@@ -31,9 +31,16 @@ def mailGrep(fileName,regep):
 '''
 # To judge where to move the mail according to *regep*s
 def mailDest(fileName,grepDict):
-    fd=open(fileName,'r')
-    lines=fd.readlines()
-    fd.close()
+    try:
+        fd=open(fileName,'r')
+        lines=fd.readlines()
+    except UnicodeDecodeError:
+        sys.stderr.write('%s: decode error, ignore it\n'%fileName)
+        fd=open(fileName,'r',errors='ignore')
+        lines=fd.readlines()
+    finally:   # This procedure will be done weather exception happened.
+        fd.close()
+
     for line in lines:
         for pattern in list(grepDict.keys()):
             #print grepDict[pattern]
