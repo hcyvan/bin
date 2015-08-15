@@ -4,7 +4,7 @@ This is a directory of scripts. I like scripts. Every scripts will be a good lan
 These scripts is write and test in debian 8. Detail is in the scripts.
 # Usage
 
-+ Python is needed by register. 
++ Python is needed by register. All of the python script are v3.
 + Clone this repertory to anywhere you want according to your authority. 
 + See *register* for the next.
 

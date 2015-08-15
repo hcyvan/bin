@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 '''
 This is a script to classify the MailBox-format mails. This script can work
 with other program which can product a MailBox-format such as getmail.
@@ -35,7 +35,7 @@ def mailDest(fileName,grepDict):
     lines=fd.readlines()
     fd.close()
     for line in lines:
-        for pattern in grepDict.keys():
+        for pattern in list(grepDict.keys()):
             #print grepDict[pattern]
             #print line
             if pattern.search(line):
@@ -118,30 +118,30 @@ def moveBoxMult(srcBox,*obj):
                 destName=os.path.join(os.path.join(dest,curNewTmp),mail)
                 shutil.move(fileName,destName)
 
-# Main prog
+if __name__ == '__main__':
 
-# Get absolue-path and MailBox-format box path
-MAIL=r'/home/navy/mail/'
-SRC=r'inbox'
-OBJ1=r'kernelnewbies_inbox'
-REGEP1=r'kernelnewbies'
-OBJ2=r'help_gnu_emacs_inbox'
-REGEP2=r'help-gnu-emacs'
+    # Get absolue-path and MailBox-format box path
+    MAIL=r'/home/navy/mail/'
+    SRC=r'inbox'
+    OBJ1=r'kernelnewbies_inbox'
+    REGEP1=r'kernelnewbies'
+    OBJ2=r'help_gnu_emacs_inbox'
+    REGEP2=r'help-gnu-emacs'
+    
+    src=os.path.join(MAIL,SRC)
+    obj1=os.path.join(MAIL,OBJ1)
+    obj2=os.path.join(MAIL,OBJ2)
+    
+    checkBox(src)
+    checkBox(obj1)
+    checkBox(obj2)
 
-src=os.path.join(MAIL,SRC)
-obj1=os.path.join(MAIL,OBJ1)
-obj2=os.path.join(MAIL,OBJ2)
-
-checkBox(src)
-checkBox(obj1)
-checkBox(obj2)
-
-# Call *getmail -n* to get the new mails
-os.system('getmail -n')
-
-# Move mails match REGEP1 from src to obj1
-# Move mails match REGEP2 from src to obj2
-moveBoxMult(src,obj1,REGEP1,obj2,REGEP2)
-
-print "mailgrep OK..."
+    # Call *getmail -n* to get the new mails
+    os.system('getmail -n')
+    
+    # Move mails match REGEP1 from src to obj1
+    # Move mails match REGEP2 from src to obj2
+    moveBoxMult(src,obj1,REGEP1,obj2,REGEP2)
+    
+    print("mailgrep OK...")
 

@@ -37,7 +37,7 @@ if os.getcwd() not in paths:
                         fd=open(bashrc,'a+')
                         fd.write(commit+shell)
                         fd.close()
-                        print "ADD:\n"+commit+shell+'\nTO '+bashrc
+                        print("ADD:\n"+commit+shell+'\nTO '+bashrc)
 
 # Chomd 755 and create soft link for scripts 
 files=os.listdir(os.getcwd())
