@@ -42,15 +42,28 @@ if __name__ == '__main__':
                      return False
               return False
 
+       def others(message):
+              match='customer_service@jd.com'
+              try:
+                     if match in message['From']:
+                            return True
+              except:
+                     return False
+              return False
+
+       
+
        os.system('getmail -n')
        
-       boxlist=['help_gnu_emacs_inbox','kernelnewbies_inbox','inbox','outbox']
+       boxlist=['inbox','help_gnu_emacs_inbox','kernelnewbies_inbox','others_inbox','outbox']
        maildir=['/home/navy/mail/'+box for box in boxlist]
        b0 = mailbox.Maildir(maildir[0])
        b1 = mailbox.Maildir(maildir[1])
        b2 = mailbox.Maildir(maildir[2])
-       # b3 = mailbox.Maildir(maildir[3])
-       moveMessage(b2, b0, help_gnu_emacs)
-       moveMessage(b2, b1, kernelnewbies)
+       b3 = mailbox.Maildir(maildir[3])
+       moveMessage(b0, b1, help_gnu_emacs)
+       moveMessage(b0, b2, kernelnewbies)
+       moveMessage(b0, b3, others)
+       
 
        print("... mailfilter ... OK!")
