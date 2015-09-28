@@ -10,10 +10,22 @@ The process is esaier and robuster than the code in mailgrep.py. Python
 should be more esay.
 '''
 
-# move message from *src_maildir* to *dest_maildir* if the *condition_func*
-# return True. *condition_func* is a function with a email.message.Message
-# argument. If the function return True, the message will be removed.
-def moveMessage(src_maildir, dest_maildir, condition_func):
+# move message from *src* to *dest* if the *condition_func* return True.
+# *src* and *dest* is two directory; *condition_func* is a function with
+# a email.message.Message argument. If the function return True, the
+# message will be removed.
+def moveMessage(src, dest, condition_func):
+       # check the *dest* directory
+       dest_sub=os.listdir(dest)
+       if not 'new' in dest_sub:
+              os.mkdir(os.path.join(dest,'new'))
+       if not 'cur' in dest_sub:
+              os.mkdir(os.path.join(dest,'cur'))
+       if not 'tmp' in dest_sub:
+              os.mkdir(os.path.join(dest,'tmp'))
+       
+       src_maildir=mailbox.Maildir(src)
+       dest_maildir=mailbox.Maildir(dest)
        for key in src_maildir.iterkeys():
               try:
                      message = src_maildir[key]
@@ -51,19 +63,13 @@ if __name__ == '__main__':
                      return False
               return False
 
-       
-
        os.system('getmail -n')
        
        boxlist=['inbox','help_gnu_emacs_inbox','kernelnewbies_inbox','others_inbox','outbox']
        maildir=['/home/navy/mail/'+box for box in boxlist]
-       b0 = mailbox.Maildir(maildir[0])
-       b1 = mailbox.Maildir(maildir[1])
-       b2 = mailbox.Maildir(maildir[2])
-       b3 = mailbox.Maildir(maildir[3])
-       moveMessage(b0, b1, help_gnu_emacs)
-       moveMessage(b0, b2, kernelnewbies)
-       moveMessage(b0, b3, others)
        
+       moveMessage(maildir[0], maildir[1], help_gnu_emacs)
+       moveMessage(maildir[0], maildir[2], kernelnewbies)
+       moveMessage(maildir[0], maildir[3], others)
 
        print("... mailfilter ... OK!")
